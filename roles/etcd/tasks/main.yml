@@ -13,14 +13,10 @@
 - name: Write etcd config file for version 0.4.x
   template: src=etcd.04.conf.j2 dest=/etc/etcd/etcd.conf
   when: "'etcd-0.4' in etcd_ver.stdout"
-  notify:
-        - restart etcd
 
 - name: Write etcd config file for version 2.0.x
   template: src=etcd.20.conf.j2 dest=/etc/etcd/etcd.conf
   when: "'etcd-2.0' in etcd_ver.stdout"
-  notify:
-        - restart etcd
 
 - name: Enable etcd
   service: name=etcd enabled=yes state=started
