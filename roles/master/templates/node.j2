@@ -1,6 +1,8 @@
-{
-    "apiVersion": "v1beta1",
-    "id": "{{ item }}",
-    "kind": "Minion",
-    "resources": {}
-}
+id: "{{ item }}"
+kind: "Minion"
+apiVersion: "v1beta1"
+resources:
+  capacity:
+    cpu: 1000
+    memory: 1073741824
+externalID: "{{ item }}"
