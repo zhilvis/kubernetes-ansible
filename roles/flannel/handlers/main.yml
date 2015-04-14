@@ -3,15 +3,13 @@
   service: name=flanneld state=restarted
   notify:
           - stop docker
-          - delete docker0
           - start docker
 
 - name: stop docker
   service: name=docker state=stopped
 
-- name: delete docker0
-  command: ip link delete docker0
-  ignore_errors: yes
+- name: reload daemon
+  command: systemctl daemon-reload
 
 - name: start docker
   service: name=docker state=started

@@ -3,15 +3,17 @@
   yum: name=flannel state=latest
   when: not is_atomic
 
-- name: Install Flannel config file
-  template: src=flanneld.j2 dest=/etc/sysconfig/flanneld
-  notify:
-          - restart flannel
+- name: Copy systemd service
+  template: src=flannel.service.j2 dest=/usr/lib/systemd/system/flannel.service
 
 - name: Launch Flannel
-  service: name=flanneld state=started enabled=yes
+  service: name=flannel enabled=yes state=started
+  notify:
+          - restart kubelet
+
+- name: Copy docker service
+  template: src=docker.service.j2 dest=/usr/lib/systemd/system/docker.service
   notify:
           - stop docker
-          - delete docker0
+          - reload daemon
           - start docker
-          - restart kubelet
