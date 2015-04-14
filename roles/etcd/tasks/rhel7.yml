@@ -2,5 +2,3 @@
 - name: Install etcd from RHEL7 packages
   yum: pkg=etcd state=latest
   when: not is_atomic
-  notify:
-          - restart etcd
