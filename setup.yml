@@ -14,7 +14,7 @@
   roles:
           - kubernetes
           - master
-          - skydns
+          - flannel
 
 - hosts: minions
   sudo: yes
