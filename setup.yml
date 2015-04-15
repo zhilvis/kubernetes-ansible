@@ -14,10 +14,10 @@
   roles:
           - kubernetes
           - master
-          - flannel
 
 - hosts: minions
   sudo: yes
   roles:
           - kubernetes
+          - flannel
           - minion
