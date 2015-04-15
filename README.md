@@ -6,13 +6,9 @@
 
 2. Subscribe each machine to RHEL network.
 
-3. Enable extras repo with:
+3. Change ansible_ssh_user in group_vars/all.yml
 
-    $ subscription-manager repos --enable rhel-7-server-extras-rpms 
-
-4. Change ansible_ssh_user in group_vars/all.yml
-
-5. Run ansible setup.yml playbook
+4. Run ansible setup.yml playbook
 
     $ ansible-playbook -i inventory setup.yml
 
