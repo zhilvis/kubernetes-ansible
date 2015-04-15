@@ -1,12 +1,10 @@
 [Unit]
 Description=Flannel network fabric
-Requires=etcd.service
-After=etcd.service
 
 [Service]
 EnvironmentFile=/etc/environment
-ExecStartPre=-/bin/bash -c "until /usr/bin/etcdctl set /coreos.com/network/config '{\"Network\": \"{{ flannel_network }}/16\"}'; do echo \"waiting for etcd to become available...\"; sleep 5; done"
-ExecStart=/usr/bin/flanneld
+ExecStartPre=-/bin/bash -c "until curl -s -L http://{{ etcd_ip_address }}:4001/v2/keys/coreos.com/network/config -XPUT -d value='{\"Network\": \"{{ flannel_network }}/16\"}'; do echo \"waiting for etcd to become available...\"; sleep 5; done"
+ExecStart=/usr/bin/flanneld -iface={{ inventory_hostname }} -etcd-endpoints=http://{{ etcd_ip_address }}:4001
 ExecStartPost=-/bin/bash -c "until [ -e /run/flannel/subnet.env ]; do echo \"waiting for write.\"; sleep 3; done"
 Restart=on-failure
 RestartSec=5
