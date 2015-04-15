@@ -8,8 +8,6 @@
 
 - name: Launch Flannel
   service: name=flannel enabled=yes state=started
-  notify:
-          - restart kubelet
 
 - name: Copy docker service
   template: src=docker.service.j2 dest=/usr/lib/systemd/system/docker.service
