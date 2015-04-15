@@ -33,7 +33,7 @@
   service: name=kube-scheduler enabled=yes state=started
 
 - include: load_nodes.yml
-  when: kube_node_via_api and not is_aws
+  when: kube_node_via_api
 
 - include: firewalld.yml
   when: has_firewalld.rc == 0
@@ -41,5 +41,3 @@
 - include: iptables.yml
   when: has_firewalld.rc != 0 and has_iptables.rc == 0
 
-- include: aws.yml
-  when: is_aws
