@@ -36,7 +36,6 @@
 
 - name: Set IP address variables
   set_fact:
-    master_ip_address: "{{ hostvars[groups['masters'][0]]['ansible_default_ipv4']['address'] }}"
-    etcd_ip_address: "{{ hostvars[groups['etcd'][0]]['ansible_default_ipv4']['address'] }}"
+    master_ip_address: "{{ hostvars[groups['masters'][0]]['inventory_hostname'] }}"
+    etcd_ip_address: "{{ hostvars[groups['etcd'][0]]['inventory_hostname'] }}"
 
-- include: aws.yml
