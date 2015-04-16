@@ -1,4 +1,7 @@
 ---
+- name: install docker from Fedora
+  yum: pkg=docker state=latest
+
 - name: Make sure cadvisor is up to date
   yum: pkg=cadvisor state=latest
   notify:

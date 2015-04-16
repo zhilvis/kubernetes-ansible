@@ -5,18 +5,16 @@
 - include: rhel7.yml
   when: is_rhel7.rc == 0
 
-- name: write the config files for kubelet
-  template: src=kubelet.j2 dest=/etc/kubernetes/kubelet
-  when: not kubelet_use_pre_v10_vars
+- name: write kubelet
+  template: src=kubelet.service dest=/usr/lib/systemd/system/kubelet.service
   notify:
+          - reload daemon
           - restart kubelet
 
-- include: kubelet-old.yaml
-  when: kubelet_use_pre_v10_vars
-
-- name: write the config files for proxy
-  template: src=proxy.j2 dest=/etc/kubernetes/proxy
+- name: write kubeproxy
+  template: src=kube-proxy.service dest=/usr/lib/systemd/system/kube-proxy.service
   notify:
+          - reload daemon
           - restart proxy
 
 - name: Enable cadvisor

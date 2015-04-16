@@ -1,0 +1,18 @@
+[Unit]
+Description=Kubernetes API Server
+After=etcd.service
+Wants=etcd.service
+
+[Service]
+ExecStart=/bin/kube-apiserver \
+--insecure_bind_address=0.0.0.0 \
+--insecure_port=8080 \
+--etcd_servers=http://{{ etcd_ip_address }}:4001 \
+--portal_net={{ kube_service_addresses }} \
+--logtostderr=true
+ExecStartPost=-/bin/bash -c "until /usr/bin/curl http://127.0.0.1:8080; do echo \"waiting for API server to come online...\"; sleep 3; done"
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

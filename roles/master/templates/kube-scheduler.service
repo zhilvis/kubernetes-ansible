@@ -1,0 +1,12 @@
+[Unit]
+Description=Kubernetes Scheduler
+After=apiserver.service
+Wants=apiserver.service
+
+[Service]
+ExecStart=/bin/kube-scheduler --master={{ master_ip_address }}:8080
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

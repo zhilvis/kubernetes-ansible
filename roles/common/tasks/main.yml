@@ -19,8 +19,18 @@
   failed_when: false
   changed_when: false
 
+- name: Determine if CENTOS
+  shell: "grep 'CentOS Linux.*release 7' /etc/redhat-release"
+  register: is_centos
+  failed_when: false
+  changed_when: false
+
 - include: rhel7_repos.yml
   when: is_rhel7.rc == 0 and not is_atomic
+
+- name: upgrade device mapper packages as docker fails otherwise
+  yum: name=device-mapper* state=latest
+  when: is_rhel7.rc == 0 or is_centos.rc == 0
 
 - name: Determine if firewalld installed
   command: "rpm -q firewalld"

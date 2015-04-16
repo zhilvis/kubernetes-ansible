@@ -1,26 +1,22 @@
 ---
-- name: write the config files for api server
-  template: src=apiserver.j2 dest=/etc/kubernetes/apiserver
+- name: write apiserver
+  template: src=kube-apiserver.service dest=/usr/lib/systemd/system/kube-apiserver.service
   notify:
+          - reload daemon
           - restart apiserver
           - restart controller-manager
           - restart scheduler
 
-- name: write the new style config file for controller-manager
-  template: src=controller-manager.j2 dest=/etc/kubernetes/controller-manager
-  when: kube_node_via_api
+- name: write controller-manager
+  template: src=kube-controller-manager.service dest=/usr/lib/systemd/system/kube-controller-manager.service
   notify:
+          - reload daemon
           - restart controller-manager
 
-- name: write the old style config file for controller-manager
-  template: src=controller-manager-old.j2 dest=/etc/kubernetes/controller-manager
-  when: not kube_node_via_api
+- name: write scheduler
+  template: src=kube-scheduler.service dest=/usr/lib/systemd/system/kube-scheduler.service
   notify:
-          - restart controller-manager
-
-- name: write the config file for scheduler
-  copy: src=scheduler dest=/etc/kubernetes/scheduler
-  notify:
+          - reload daemon
           - restart scheduler
 
 - name: Enable apiserver
@@ -33,7 +29,6 @@
   service: name=kube-scheduler enabled=yes state=started
 
 - include: load_nodes.yml
-  when: kube_node_via_api
 
 - include: firewalld.yml
   when: has_firewalld.rc == 0

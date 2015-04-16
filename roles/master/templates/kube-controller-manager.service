@@ -1,0 +1,13 @@
+[Unit]
+Description=Kubernetes Controller Manager
+After=apiserver.service
+Wants=apiserver.service
+
+[Service]
+ExecStart=/bin/kube-controller-manager \
+--master=http://{{ master_ip_address }}:8080
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

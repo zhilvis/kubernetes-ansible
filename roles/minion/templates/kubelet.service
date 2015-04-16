@@ -1,0 +1,19 @@
+[Unit]
+Description=Kubernetes Kubelet
+After=docker.service
+Wants=docker.service
+
+[Service]
+ExecStart=/bin/kubelet \
+--address={{ inventory_hostname }} \
+--port=10250 \
+--hostname_override={{ inventory_hostname }} \
+--api_servers=http://{{ master_ip_address }}:8080 \
+--cluster_dns={{ dns_server }} \
+--cluster_domain={{ dns_domain }} \
+--logtostderr=true
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

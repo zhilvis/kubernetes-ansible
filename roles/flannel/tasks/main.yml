@@ -15,3 +15,4 @@
           - stop docker
           - reload daemon
           - start docker
+          - restart kubelet

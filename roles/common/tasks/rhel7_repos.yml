@@ -2,5 +2,3 @@
 - name: Enable RHEL7 Extra Repo
   command: "subscription-manager repos --enable rhel-7-server-extras-rpms"
 
-- name: upgrade all packages as docker fails otherwise
-  yum: name=* state=latest

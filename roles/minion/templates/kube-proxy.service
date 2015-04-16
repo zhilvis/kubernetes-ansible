@@ -1,0 +1,12 @@
+[Unit]
+Description=Kubernetes proxy server
+After=docker.service
+Wants=docker.service
+
+[Service]
+ExecStart=/bin/kube-proxy --master=http://{{ master_ip_address }}:8080 --logtostderr=true
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

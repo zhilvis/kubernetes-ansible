@@ -1,4 +1,7 @@
 ---
+- name: reload daemon
+  command: systemctl daemon-reload
+
 - name: restart daemons
   command: /bin/true
   notify:
