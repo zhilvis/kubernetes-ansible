@@ -46,6 +46,7 @@
 
 - name: Set IP address variables
   set_fact:
-    master_ip_address: "{{ hostvars[groups['masters'][0]]['inventory_hostname'] }}"
-    etcd_ip_address: "{{ hostvars[groups['etcd'][0]]['inventory_hostname'] }}"
+    master_ip_address: "{{ hostvars[groups['masters'][0]][public_network_if].ipv4.address }}"
+    etcd_ip_address: "{{ hostvars[groups['etcd'][0]][public_network_if].ipv4.address }}"
+    current_ip: "{{ hostvars[inventory_hostname][public_network_if].ipv4.address }}"
 

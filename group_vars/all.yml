@@ -16,6 +16,10 @@ flannel_network: 4.0.0.0
 # Prefix length of kube_overlay_ip range.
 kube_overlay_prefix: 16
 
+
+#Public network interface, which must be used to fetch master ip
+public_network_if: ansible_eth0
+
 # Internal DNS domain name.
 # This domain must not be used in your network. Services will be discoverable
 # under <service-name>.<namespace>.<domainname>, e.g.
