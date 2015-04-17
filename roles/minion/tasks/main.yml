@@ -5,6 +5,14 @@
 - include: rhel7.yml
   when: is_rhel7.rc == 0
 
+- name: Copy docker service
+  template: src=docker.service.j2 dest=/usr/lib/systemd/system/docker.service
+  notify:
+          - stop docker
+          - reload daemon
+          - start docker
+          - restart kubelet
+
 - name: write kubelet
   template: src=kubelet.service dest=/usr/lib/systemd/system/kubelet.service
   notify:
