@@ -1,12 +1,12 @@
 {
     "kind": "Node",
     "apiVersion": "v1beta3",
-    "hostIP": "{{ item }}",
+    "hostIP": "{{ hostvars[item][public_network_if].ipv4.address }}",
     "metadata": {
-        "name": "{{ item }}"
+        "name": "{{ hostvars[item][public_network_if].ipv4.address }}"
     },
     "spec": {
-        "externalID": "{{ item }}"
+        "externalID": "{{ hostvars[item][public_network_if].ipv4.address }}"
     },
     "status": {
         "capacity": {
